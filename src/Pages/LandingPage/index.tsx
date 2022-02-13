@@ -1,4 +1,5 @@
 import React from "react";
+import { navigateToUrl } from "single-spa";
 
 import Header from "../../components/Header";
 import DynamicImage from "../../components/DynamicImage";
@@ -16,6 +17,14 @@ const modules = [
 ];
 
 export default function LandingPage() {
+  const onValidate = async () => {
+    if (localStorage.getItem("@token")) {
+      navigateToUrl("http://localhost:9000/HomePage");
+    }
+
+    navigateToUrl("http://localhost:9000/LoginPage");
+  };
+
   return (
     <S.Container>
       <Header />
@@ -55,7 +64,7 @@ export default function LandingPage() {
           <S.AcessModulesHolder>
             {modules.map((module, index) => (
               <React.Fragment key={index}>
-                <ModuleContainer name={module} />
+                <ModuleContainer name={module} onValidate={onValidate} />
               </React.Fragment>
             ))}
           </S.AcessModulesHolder>
